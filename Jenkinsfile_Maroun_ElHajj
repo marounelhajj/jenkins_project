@@ -52,7 +52,7 @@ pipeline {
             steps {
                 bat """
                 call %VIRTUAL_ENV%\\Scripts\\activate
-                "%PY_EXE%" -m bandit -r .
+                "%PY_EXE%" -m bandit -r . -x %VIRTUAL_ENV%
                 """
             }
         }
@@ -72,4 +72,3 @@ pipeline {
         }
     }
 }
-
