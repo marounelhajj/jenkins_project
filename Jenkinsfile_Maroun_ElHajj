@@ -38,6 +38,25 @@ pipeline {
             }
         }
 
+        stage('Coverage') {
+            steps {
+                bat """
+                call %VIRTUAL_ENV%\\Scripts\\activate
+                "%PY_EXE%" -m coverage run -m pytest
+                "%PY_EXE%" -m coverage report
+                """
+            }
+        }
+
+        stage('Security Scan') {
+            steps {
+                bat """
+                call %VIRTUAL_ENV%\\Scripts\\activate
+                "%PY_EXE%" -m bandit -r .
+                """
+            }
+        }
+
         stage('Deploy') {
             steps {
                 bat """
@@ -53,3 +72,4 @@ pipeline {
         }
     }
 }
+
