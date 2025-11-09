@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         VIRTUAL_ENV = 'venv'
+        PY_EXE = 'C:\\Users\\AUB\\AppData\\Local\\Programs\\Python\\Python312\\python.exe'
     }
 
     stages {
@@ -10,11 +11,11 @@ pipeline {
             steps {
                 bat """
                 if not exist %VIRTUAL_ENV% (
-                    py -3 -m venv %VIRTUAL_ENV%
+                    "%PY_EXE%" -m venv %VIRTUAL_ENV%
                 )
                 call %VIRTUAL_ENV%\\Scripts\\activate
-                py -3 -m pip install --upgrade pip
-                py -3 -m pip install -r requirements.txt
+                "%PY_EXE%" -m pip install --upgrade pip
+                "%PY_EXE%" -m pip install -r requirements.txt
                 """
             }
         }
@@ -23,7 +24,7 @@ pipeline {
             steps {
                 bat """
                 call %VIRTUAL_ENV%\\Scripts\\activate
-                py -3 -m flake8 app.py
+                "%PY_EXE%" -m flake8 app.py
                 """
             }
         }
@@ -32,7 +33,7 @@ pipeline {
             steps {
                 bat """
                 call %VIRTUAL_ENV%\\Scripts\\activate
-                py -3 -m pytest
+                "%PY_EXE%" -m pytest
                 """
             }
         }
